@@ -25,7 +25,7 @@ session_id = json.loads(response.text)['sessionId']
 
 element = Elements(host, session_id)
 interaction = Interactions(host, session_id)
-driver = Driver()
+driver = Driver(host, session_id)
 
 
 requests.request('POST', host+'session/'+session_id+'/url', data=json.dumps({"url": "http://www.duckduckgo.com"}).encode('utf8'))
