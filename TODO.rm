@@ -1,5 +1,7 @@
 TODO:
 
 -Capabilities.
--driver que contenga todas las otras clases.
--Licencias
+-Armar el host con url+port
+-Armar el readme
+-Armar un manual de uso
+-Poner el subproceso en el start del driver (?????)

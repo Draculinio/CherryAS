@@ -1,14 +1,10 @@
 import requests
 import json
 import subprocess
-from Elements import *
-from Interactions import *
 from Driver import *
 
 
-
 process = subprocess.Popen('chromedriver.exe --port=9000')
-host = 'http://127.0.0.1:9000/'
 
 capabilites = {
     "desiredCapabilities":{
@@ -20,25 +16,27 @@ capabilites = {
     }
 }
 
-response = requests.request('POST', host+'session', data=json.dumps(capabilites).encode('utf8'))
-session_id = json.loads(response.text)['sessionId']
+driver = Driver()
+driver.start(capabilites)
+driver.navigate("http://www.duckduckgo.com")
 
-element = Elements(host, session_id)
-interaction = Interactions(host, session_id)
-driver = Driver(host, session_id)
-
-
-requests.request('POST', host+'session/'+session_id+'/url', data=json.dumps({"url": "http://www.duckduckgo.com"}).encode('utf8'))
 
 # Start manipulating elements
-search_input = element.get_element('xpath', '//*[@id ="search_form_input_homepage"]')
-search_button = element.get_element('xpath', '//*[@id ="search_button_homepage"]')
 
-interaction.write(search_input, 'Draculinio')
-interaction.click(search_button)
+search_input = driver.get_element('xpath', '//*[@id ="search_form_input_homepage"]')
+search_button = driver.get_element('xpath', '//*[@id ="search_button_homepage"]')
+driver.write(search_input, 'Draculinio')
+driver.click(search_button)
+
+#element = Elements(host, session_id)
+#interaction = Interactions(host, session_id)
+#search_input = element.get_element('xpath', '//*[@id ="search_form_input_homepage"]')
+#search_button = element.get_element('xpath', '//*[@id ="search_button_homepage"]')
+#interaction.write(search_input, 'Draculinio')
+#interaction.click(search_button)
 
 driver.close_browser()
+driver.quit()
 
-requests.request('DELETE', host+'session/'+session_id)
 process.terminate()
 
