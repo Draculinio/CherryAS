@@ -19,7 +19,9 @@ capabilites = {
 driver = Driver()
 driver.start(capabilites)
 driver.navigate("http://www.duckduckgo.com")
-
+driver.maximize()
+driver.minimize()
+driver.fullscreen()
 
 # Start manipulating elements
 
