@@ -2,7 +2,7 @@ import requests
 from Interactions import *
 from Elements import *
 from Browser import *
-
+from webdriverExecutioner import *
 class Driver:
     def __init__(self):
         self.host = ''
@@ -10,10 +10,12 @@ class Driver:
         self.interactions = ''
         self.elements = ''
         self.browser = ''
+        self.webdriver_exec = WebDriverExecutioner()
 
     def start(self, capabilities, host='http://127.0.0.1:9000/'):
+        self.webdriver_exec.launch_driver()
         self.host = host
-        #print(self.browser.start_browser(capabilities))
+
         response = requests.request('POST', self.host + 'session', data=json.dumps(capabilities).encode('utf8'))
         self.session_id = json.loads(response.text)['sessionId']
 
@@ -24,7 +26,6 @@ class Driver:
 
     def close_browser(self):
         self.browser.close_browser()
-        #requests.request('DELETE', self.host + 'session/' + self.session_id + '/window')
 
     def get_element(self, locator, value):
         return self.elements.get_element(locator, value)
@@ -36,11 +37,11 @@ class Driver:
         self.interactions.write(element, text)
 
     def navigate(self, url):
-        requests.request('POST', self.host + 'session/' + self.session_id + '/url',
-                         data=json.dumps({"url": url}).encode('utf8'))
+        self.browser.navigate(url)
 
     def quit(self):
         requests.request('DELETE', self.host + 'session/' + self.session_id)
+        self.webdriver_exec.terminate_driver()
 
     def maximize(self):
         self.browser.maximize()
@@ -50,3 +51,9 @@ class Driver:
 
     def fullscreen(self):
         self.browser.full_screen()
+
+    def new_window(self):
+        self.browser.new_window()
+
+    def get_url(self):
+        self.browser.get_url()

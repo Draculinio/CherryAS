@@ -4,8 +4,6 @@ import subprocess
 from Driver import *
 
 
-process = subprocess.Popen('chromedriver.exe --port=9000')
-
 capabilites = {
     "desiredCapabilities":{
         "browserName":"chrome",
@@ -19,9 +17,12 @@ capabilites = {
 driver = Driver()
 driver.start(capabilites)
 driver.navigate("http://www.duckduckgo.com")
-driver.maximize()
-driver.minimize()
+print(driver.get_url())
 driver.fullscreen()
+driver.minimize()
+driver.maximize()
+
+
 
 # Start manipulating elements
 
@@ -30,6 +31,9 @@ search_button = driver.get_element('xpath', '//*[@id ="search_button_homepage"]'
 driver.write(search_input, 'Draculinio')
 driver.click(search_button)
 
+
+#Legacy (it works but not recomended)
+#driver.new_window()
 #element = Elements(host, session_id)
 #interaction = Interactions(host, session_id)
 #search_input = element.get_element('xpath', '//*[@id ="search_form_input_homepage"]')
@@ -40,5 +44,4 @@ driver.click(search_button)
 driver.close_browser()
 driver.quit()
 
-process.terminate()
 
