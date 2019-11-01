@@ -30,7 +30,7 @@ driver.quit() #Quits the driver
 
 Anyone is free to collaborate, to fork and to pull requests. Later we will set rules.
 
-##License:
+## License:
 
 [Apache 2.0](https://www.apache.org/licenses/LICENSE-2.0.html)
 

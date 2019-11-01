@@ -13,18 +13,18 @@ class Driver:
         self.elements = ''
         self.browser = ''
         self.webdriver_exec = WebDriverExecutioner()
+        self.request_url = ''
 
     def start(self, capabilities, host='http://127.0.0.1:9000/'):
         self.webdriver_exec.launch_driver()
         self.host = host
-
         response = requests.request('POST', self.host + 'session', data=json.dumps(capabilities).encode('utf8'))
-        self.session_id = json.loads(response.text)['sessionId']
-
+        self.session_id = json.loads(response.text)['sessionId'] #Todo: see if session_id variable is necesary
+        self.request_url = self.host + 'session/' + self.session_id
         #self.session_id = self.browser.start_browser(capabilities)
         self.interactions = Interactions(self.host, self.session_id)
         self.elements = Elements(self.host, self.session_id)
-        self.browser = Browser(self.host, self.session_id)
+        self.browser = Browser(self.request_url)
 
     def close_browser(self):
         self.browser.close_browser()
@@ -59,3 +59,22 @@ class Driver:
 
     def get_url(self):
         return self.browser.get_url()
+
+    def get_title(self):
+        return self.browser.get_title()
+
+    def direction(self, direction):
+        if direction.upper() == 'BACK':
+            self.browser.back()
+        else:
+            self.browser.forward()
+
+    def back(self):
+        self.browser.back()
+
+    def forward(self):
+        self.browser.forward()
+
+    def refresh(self):
+        self.browser.refresh()
+
