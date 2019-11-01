@@ -7,6 +7,7 @@ class Browser:
         self.session_id = session_id
         self.host = host
 
+
     def maximize(self):
         requests.request('POST', self.host + 'session/' + self.session_id + '/window/maximize')
 
@@ -35,5 +36,5 @@ class Browser:
 
     def get_url(self):
         response = requests.request('GET', self.host + 'session/' + self.session_id + '/url')
-        print(json.loads(response.text))
-        return json.loads(response.text)
+        url = json.loads(response.text)['value']
+        return url

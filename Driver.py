@@ -3,6 +3,8 @@ from Interactions import *
 from Elements import *
 from Browser import *
 from webdriverExecutioner import *
+
+
 class Driver:
     def __init__(self):
         self.host = ''
@@ -56,4 +58,4 @@ class Driver:
         self.browser.new_window()
 
     def get_url(self):
-        self.browser.get_url()
+        return self.browser.get_url()
