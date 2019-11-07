@@ -21,7 +21,6 @@ class Driver:
         response = requests.request('POST', self.host + 'session', data=json.dumps(capabilities).encode('utf8'))
         self.session_id = json.loads(response.text)['sessionId'] #Todo: see if session_id variable is necesary
         self.request_url = self.host + 'session/' + self.session_id
-        #self.session_id = self.browser.start_browser(capabilities)
         self.interactions = Interactions(self.host, self.session_id)
         self.elements = Elements(self.host, self.session_id)
         self.browser = Browser(self.request_url)
@@ -78,3 +77,25 @@ class Driver:
     def refresh(self):
         self.browser.refresh()
 
+    def get_element_by_property(self, prop, value):
+        value = '//*[@' + prop + ' ="' + value + '"]'
+        return self.elements.get_element('xpath', value)
+
+    def get_element_by_id(self, value):
+        value = '//*[@id ="'+value+'"]'
+        return self.elements.get_element('xpath', value)
+
+    def get_element_by_xpath(self, value):
+        return self.elements.get_element('xpath', value)
+
+    def get_element_by_link_text(self,value):
+        return self.elements.get_element('link text', value)
+
+    def get_element_by_css(self,value):
+        return self.elements.get_element('css selector', value)
+
+    def get_element_by_partial_link_text(self,value):
+        return self.elements.get_element('partial link text', value)
+
+    def get_element_by_tag(self,value):
+        return self.elements.get_element('tag name', value)
