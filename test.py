@@ -1,21 +1,13 @@
-import requests
-import json
-import subprocess
 from Driver import *
+from Capabilities import *
 
-
-capabilites = {
-    "desiredCapabilities":{
-        "browserName":"chrome",
-        "chromeoptions":{
-            "binary":"C:\\Program Files (x86)\\Google Chrome\\Application\\chrome.exe"
-        },
-        "platform": "ANY"
-    }
-}
+caps = Capabilities()
+caps.add_desired_capability('browserName', 'chrome')
+caps.add_chrome_option('binary', "C:\\Program Files (x86)\\Google Chrome\\Application\\chrome.exe")
+caps.add_desired_capability('platform', 'ANY')
 
 driver = Driver()
-driver.start(capabilites)
+driver.start(caps.capability)
 driver.navigate("http://www.duckduckgo.com")
 print(driver.get_url())
 print(driver.get_title())
@@ -58,5 +50,3 @@ driver.refresh()
 
 driver.close_browser()
 driver.quit()
-
-
