@@ -7,7 +7,7 @@ caps.add_chrome_option('binary', "C:\\Program Files (x86)\\Google Chrome\\Applic
 caps.add_desired_capability('platform', 'ANY')
 
 driver = Driver()
-driver.start(caps.capability)
+driver.start(caps.capability, '9000', 'chrome')
 driver.navigate("http://www.duckduckgo.com")
 print(driver.get_url())
 print(driver.get_title())

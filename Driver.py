@@ -6,6 +6,14 @@ from webdriverExecutioner import *
 
 
 class Driver:
+    '''
+    This class is the Cherry Driver. With this you will interact with your browser
+
+    Methods
+    -------
+    start: Runs the webdriver
+    close_browser: Closes the browser... it is obvious...
+    '''
     def __init__(self):
         self.host = ''
         self.session_id = ''
@@ -15,9 +23,17 @@ class Driver:
         self.webdriver_exec = WebDriverExecutioner()
         self.request_url = ''
 
-    def start(self, capabilities, host='http://127.0.0.1:9000/'):
-        self.webdriver_exec.launch_driver()
-        self.host = host
+    def start(self, capabilities,  port='9000', driver_name='chrome', host='http://127.0.0.1'):
+        '''
+        Starts the webdriver and creates the session
+        :param capabilities: The capabilities to run the session
+        :param port: the port where the web driver will run
+        :param driver_name: chrome (more to come soon...)
+        :param host: by default 127.0.0.1 if you want to run this from another site put your host.
+        :return: X
+        '''
+        self.webdriver_exec.launch_driver(port, driver_name)
+        self.host = host+':'+port+'/'
         response = requests.request('POST', self.host + 'session', data=json.dumps(capabilities).encode('utf8'))
         self.session_id = json.loads(response.text)['sessionId'] #Todo: see if session_id variable is necesary
         self.request_url = self.host + 'session/' + self.session_id
@@ -26,9 +42,19 @@ class Driver:
         self.browser = Browser(self.request_url)
 
     def close_browser(self):
+        '''
+        Closes the browser
+        :return: X
+        '''
         self.browser.close_browser()
 
     def get_element(self, locator, value):
+        '''
+        Gets and element
+        :param locator: The actual locator (property, id, xpath, link_text, css, partial_link_text,tag)
+        :param value: The value to search the locator
+        :return: an element.
+        '''
         return self.elements.get_element(locator, value)
 
     def click(self, element):

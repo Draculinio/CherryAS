@@ -1,10 +1,8 @@
 TODO:
 
--Capabilities. (In progress)
--Armar el host con url+port
-
 -Armar un manual de uso:
 --Especificar distintas vias para hacer lo mismo, capabilities desde el inicio, como usar cualquier forma
+(In progress)
 
 
 -Ver tema timeouts.
@@ -12,3 +10,5 @@ TODO:
 -Hacer una web de practica.
 -Logging
 -Armar standards
+
+-Agregar un lint para el codigo
