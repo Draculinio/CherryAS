@@ -3,12 +3,7 @@ TODO:
 -Armar un manual de uso:
 --Especificar distintas vias para hacer lo mismo, capabilities desde el inicio, como usar cualquier forma
 (In progress)
-
-
 -Ver tema timeouts.
--Agregar try/except
--Hacer una web de practica.
+-Agregar try/except por elemento inexistente en todos siguiendo el modelo de get_element
 -Logging
 -Armar standards
-
--Agregar un lint para el codigo

@@ -10,7 +10,6 @@ class Browser:
         '''
         Maximizes the browser
         '''
-        print(self.request_url)
         requests.request('POST', self.request_url + '/window/maximize')
 
     def minimize(self):

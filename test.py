@@ -20,7 +20,7 @@ driver.maximize()
 # Start manipulating elements
 
 #search_input = driver.get_element('xpath', '//*[@id ="search_form_input_homepage"]')
-search_input = driver.get_element('id', 'search_form_input_homepage')
+search_input = driver.get_element('id', 'search_form_input_homepag') #Change this
 search_button = driver.get_element('xpath', '//*[@id ="search_button_homepage"]')
 privacy = driver.get_element_by_property('class', 'js-popout-link js-showcase-popout ddgsi ddgsi-down')
 #duckduckgo_logo = driver.get_element('link text', 'About DuckDuckGo')

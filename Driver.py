@@ -14,6 +14,7 @@ class Driver:
     start: Runs the webdriver
     close_browser: Closes the browser... it is obvious...
     '''
+
     def __init__(self):
         self.host = ''
         self.session_id = ''
@@ -23,7 +24,7 @@ class Driver:
         self.webdriver_exec = WebDriverExecutioner()
         self.request_url = ''
 
-    def start(self, capabilities,  port='9000', driver_name='chrome', host='http://127.0.0.1'):
+    def start(self, capabilities, port='9000', driver_name='chrome', host='http://127.0.0.1'):
         '''
         Starts the webdriver and creates the session
         :param capabilities: The capabilities to run the session
@@ -33,9 +34,9 @@ class Driver:
         :return: X
         '''
         self.webdriver_exec.launch_driver(port, driver_name)
-        self.host = host+':'+port+'/'
+        self.host = host + ':' + port + '/'
         response = requests.request('POST', self.host + 'session', data=json.dumps(capabilities).encode('utf8'))
-        self.session_id = json.loads(response.text)['sessionId'] #Todo: see if session_id variable is necesary
+        self.session_id = json.loads(response.text)['sessionId']  # Todo: see if session_id variable is necesary
         self.request_url = self.host + 'session/' + self.session_id
         self.interactions = Interactions(self.host, self.session_id)
         self.elements = Elements(self.host, self.session_id)
@@ -47,15 +48,6 @@ class Driver:
         :return: X
         '''
         self.browser.close_browser()
-
-    def get_element(self, locator, value):
-        '''
-        Gets and element
-        :param locator: The actual locator (property, id, xpath, link_text, css, partial_link_text,tag)
-        :param value: The value to search the locator
-        :return: an element.
-        '''
-        return self.elements.get_element(locator, value)
 
     def click(self, element):
         self.interactions.click(element)
@@ -103,25 +95,42 @@ class Driver:
     def refresh(self):
         self.browser.refresh()
 
+    # GET ELEMENT METHODS
+
+    def get_element(self, locator, value):
+        '''
+        Gets and element
+        :param locator: The actual locator (property, id, xpath, link_text, css, partial_link_text,tag)
+        :param value: The value to search the locator
+        :return: an element.
+        '''
+        element = self.elements.get_element(locator, value)
+        if element == 'Error':
+            print("The element was not located")
+            self.quit()
+            # Probably something will go here to mark the error
+            quit()
+        return element
+
     def get_element_by_property(self, prop, value):
         value = '//*[@' + prop + ' ="' + value + '"]'
         return self.elements.get_element('xpath', value)
 
     def get_element_by_id(self, value):
-        value = '//*[@id ="'+value+'"]'
+        value = '//*[@id ="' + value + '"]'
         return self.elements.get_element('xpath', value)
 
     def get_element_by_xpath(self, value):
         return self.elements.get_element('xpath', value)
 
-    def get_element_by_link_text(self,value):
+    def get_element_by_link_text(self, value):
         return self.elements.get_element('link text', value)
 
-    def get_element_by_css(self,value):
+    def get_element_by_css(self, value):
         return self.elements.get_element('css selector', value)
 
-    def get_element_by_partial_link_text(self,value):
+    def get_element_by_partial_link_text(self, value):
         return self.elements.get_element('partial link text', value)
 
-    def get_element_by_tag(self,value):
+    def get_element_by_tag(self, value):
         return self.elements.get_element('tag name', value)
